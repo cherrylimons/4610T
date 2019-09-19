@@ -1,0 +1,42 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       main.cpp                                                  */
+/*    Author2:       C:\Users\Student                                          */
+/*    Created:      Wed Sep 11 2019                                           */
+/*    Description:  V5 project                                                */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+#include "vex.h"
+
+using namespace vex;
+
+// A global instance of vex::brain used for printing to the V5 brain screen
+vex::brain    Brain;
+
+// define your global instances of motors and other devices here
+vex::motor(LeftDrive) = vex::motor(PORT1);
+vex::motor(RightDrive) = vex::motor(PORT2, true);
+vex::motor(Template) = vex::motor(PORT3);
+vex::controller Controller = vex::controller();
+int main() {
+    int count = 0;
+    Brain.Screen.setCursor(1,1);
+    Brain.Screen.print("User Program has Started.");
+    // Clear the controller's screen.
+    // 
+    //Controller.Screen6666
+    
+    
+    
+    
+    
+
+    //while(1)
+    //{
+      //LeftDrive.spin(vex::directionType::fwd, Controller.Axis3.position(), vex::velocityUnits::pct);
+      //vex::task::sleep(20);
+
+
+
+    //}
+}
