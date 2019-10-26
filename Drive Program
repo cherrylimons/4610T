@@ -1,0 +1,78 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       main.cpp                                                  */
+/*    Author2:       C:\Users\Student                                          */
+/*    Created:      Wed Sep 11 2019                                           */
+/*    Description:  ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+#include "vex.h"
+
+using namespace vex;
+
+// A global instance of vex::brain used for printing to the V5 brain screen
+vex::brain    Brain;
+
+// define your global instances of motors and other devices here
+vex::motor(LeftDrive) = vex::motor(PORT11);
+vex::motor(RightDrive) = vex::motor(PORT20, true);
+vex::motor(Tray) = vex::motor(PORT14);
+vex::motor(RightArm) = vex::motor(PORT8, true);
+vex::motor(LeftArm) = vex::motor(PORT2);
+vex::motor(LeftIntake) = vex::motor(PORT1);
+vex::motor(RightIntake) = vex::motor(PORT10);
+vex::controller Controller = vex::controller();
+
+
+int main() 
+{
+  while(true)
+  {
+    if(Controller.ButtonR1.pressing())
+      {
+        Tray.spin(directionType::fwd, 50, velocityUnits::pct);
+      }
+      else if(Controller.ButtonR2.pressing())
+      {
+        Tray.spin(directionType::rev, 50, velocityUnits::pct);
+      }
+      else
+      {
+        Tray.stop(brakeType::hold);
+      }
+      LeftDrive.spin(directionType::fwd, Controller.Axis3.position(), velocityUnits::pct);
+      RightDrive.spin(directionType::fwd, Controller.Axis2.position(), velocityUnits::pct);
+      if(Controller.ButtonL1.pressing())
+      {
+        LeftArm.spin(directionType::fwd, 50, velocityUnits::pct);
+        RightArm.spin(directionType::fwd, 50, velocityUnits::pct);
+      }
+      else if(Controller.ButtonL2.pressing())
+      {
+        LeftArm.spin(directionType::rev, 50, velocityUnits::pct);
+        RightArm.spin(directionType::rev, 50, velocityUnits::pct);
+      }
+      else
+      {
+        LeftArm.stop(hold);
+        RightArm.stop(hold);
+      }
+
+    if(Controller.ButtonY.pressing())
+    {
+      LeftIntake.spin(directionType::rev, 100, velocityUnits::pct);
+      RightIntake.spin(directionType::fwd, 100, velocityUnits::pct);
+    }
+    else if(Controller.ButtonA.pressing())
+    {
+      LeftIntake.spin(directionType::fwd, 100, velocityUnits::pct);
+      RightIntake.spin(directionType::rev, 100, velocityUnits::pct);
+    }
+    else
+    {
+      LeftIntake.stop(hold);
+      RightIntake.stop(hold);
+    }
+    //return 0;
+  }
+}
