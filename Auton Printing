@@ -1,0 +1,99 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       main.cpp                                                  */
+/*    Author:       C:\Users\Student                                          */
+/*    Created:      Sat Oct 26 2019                                           */
+/*    Description:  4610T Auton Functions                                     */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+#include "vex.h"
+
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Tray                 motor         14              
+// Drivetrain           drivetrain    11, 20          
+// IntakeR              motor         10              
+// IntakeL              motor         1               
+// ArmL                 motor         2               
+// ArmR                 motor         8               
+// GyroA                gyro          A               
+// ---- END VEXCODE CONFIGURED DEVICES ----
+
+using namespace vex;
+
+int main() {
+  // Initializing Robot Configuration. DO NOT REMOVE!
+  vexcodeInit();
+ /* Brain.resetTimer();
+  Controller1.Screen.setCursor(1,1);
+  Controller1.Screen.clearScreen();
+  Controller1.Screen.print("Startup.");
+  wait(1, sec);
+  Controller1.Screen.setCursor(1,1);
+  Controller1.Screen.clearScreen();
+  Controller1.Screen.print("Startup..");
+  wait(1, sec);
+  Controller1.Screen.setCursor(1,1);
+  Controller1.Screen.clearScreen();
+  Controller1.Screen.print("Startup...");
+  wait(1, sec);
+  Controller1.Screen.setCursor(1,1);
+  Controller1.Screen.clearScreen();
+  Controller1.Screen.print("Initialized! %f", Brain.Timer.time(timeUnits::msec));
+  wait(1, sec);
+  Controller1.Screen.setCursor(1,1);
+  Controller1.Screen.clearScreen(); */
+    int RedFrontX = 10;
+    int RedFrontY = 10;
+    int RedBackX = 10;
+    int RedBackY = 130;
+    int BlueFrontX= 130;
+    int BlueBackX = 130;
+    int BlueFrontY = 10;
+    int BlueBackY = 130;
+    int height = 100;
+    int width = 100;
+    
+    int RedFrontendX = RedFrontX + width;
+    int RedFrontendY = RedFrontY + height;
+    int RedBackendX = RedBackX + width;
+    int RedBackendY = RedBackY + height;
+    int BlueFrontendX = RedBackX + width;
+    int BlueFrontendY = RedBackY + height;
+    int BlueBackendX = BlueBackX + width;
+    int BlueBackendY = BlueBackY + height;
+
+    Brain.Screen.setFillColor(red);
+    Brain.Screen.drawRectangle(RedFrontX, RedFrontY, width, height);
+    Brain.Screen.drawRectangle(RedBackX, RedBackY, width, height);
+    Brain.Screen.setFillColor(blue);
+    Brain.Screen.drawRectangle(BlueFrontX, BlueFrontY, width, height);
+    Brain.Screen.drawRectangle(BlueBackX, BlueBackY, width, height);
+    Brain.Screen.setFillColor(black);
+    Brain.Screen.setCursor(3,3);
+    Brain.Screen.print("Red Front");
+    
+    while(true){
+        if (Brain.Screen.pressing()){
+
+            int X = Brain.Screen.xPosition();//X pos of press
+            int Y = Brain.Screen.yPosition();// Y pos of press
+
+            //Checks if press is within boundaries of rectangle
+            if ((X >= RedFrontX && X <= RedFrontendX) && (Y >= RedFrontY && Y <= RedFrontendY)){
+                Controller1.Screen.clearScreen();
+                Controller1.Screen.setCursor(2, 5);
+                Controller1.Screen.print("RED FRONT");
+            }
+        }
+ /* while(1)
+  {
+  Brain.Screen.print("Gyro X=%d", GyroA.angle());
+  wait(10, timeUnits::msec);
+  Brain.Screen.clearScreen();
+  Brain.Screen.setCursor(2, 4);
+  } */
+}
+}
