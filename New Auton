@@ -1,0 +1,112 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       main.cpp                                                  */
+/*    Author:       C:\Users\Student                                          */
+/*    Created:      Wed Nov 13 2019                                           */
+/*    Description:  V5 project                                                */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// ---- END VEXCODE CONFIGURED DEVICES ----
+
+#include "vex.h"
+#include <cmath>
+using namespace vex;
+
+const int SLOWIN = 1;
+const int FASTIN = 2;
+const int SLOWOUT = 3;
+const int FASTOUT = 4;
+const int HOLD = 5;
+vex::motor(LeftDrive) = vex::motor(PORT1);
+vex::motor(RightDrive) = vex::motor(PORT2, true);
+vex::motor(Tray) = vex::motor(PORT19);
+vex::motor(RightArm) = vex::motor(PORT3, true);
+vex::motor(LeftArm) = vex::motor(PORT10);
+vex::motor(LeftIntake) = vex::motor(PORT4);
+vex::motor(RightIntake) = vex::motor(PORT9, true);
+
+void drive(int a, int x)
+{
+  LeftDrive.startRotateFor(directionType::fwd,a, rotationUnits::deg, x, velocityUnits::pct);  
+  RightDrive.rotateFor(directionType::fwd,a, rotationUnits::deg, x, velocityUnits::pct);
+}
+
+void rightturn(int a, int b)
+{
+  LeftDrive.startRotateFor(directionType::fwd, a, rotationUnits::deg, b, velocityUnits::pct);
+  RightDrive.spinFor(directionType::rev, a, rotationUnits::deg, b, velocityUnits::pct);
+}
+
+
+void leftturn(int a, int b)
+{
+  LeftDrive.startRotateFor(directionType::rev, a, rotationUnits::deg, b, velocityUnits::pct);
+  RightDrive.spinFor(directionType::fwd, a, rotationUnits::deg, b, velocityUnits::pct);
+}
+
+void tray(int a)
+{
+  Tray.spinFor(directionType::fwd, a, rotationUnits::deg);
+}
+
+void lift(int a)
+{
+  RightArm.startRotateFor(directionType::rev, a, rotationUnits::deg);
+  LeftArm.spinFor(directionType::rev, a, rotationUnits::deg);
+}
+
+void intake(char mode)
+{
+  if(mode == 1 ) //slow in
+  {
+    LeftIntake.spin(directionType::fwd, 30, velocityUnits::pct);
+    RightIntake.spin(directionType::fwd, 30, velocityUnits::pct);
+  }
+  else if(mode == 2) //fast in
+  {
+    LeftIntake.spin(directionType::fwd, 100, velocityUnits::pct);
+    RightIntake.spin(directionType::fwd, 100, velocityUnits::pct);
+  }
+  else if(mode == 3) //slow out
+  {
+    LeftIntake.spin(directionType::rev, 30, velocityUnits::pct);
+    RightIntake.spin(directionType::rev, 30, velocityUnits::pct);
+  }
+  else if(mode == 4) //fast out
+  {
+    LeftIntake.spin(directionType::rev, 100, velocityUnits::pct);
+    RightIntake.spin(directionType::rev, 100, velocityUnits::pct);
+  }
+  else if(mode == 5) //hold
+  {
+    LeftIntake.stop(brakeType::hold);
+    RightIntake.stop(brakeType::hold);
+  }
+  else //stop when it breaks because my code sucks
+  {
+    LeftIntake.stop();
+    RightIntake.stop();
+  }
+}
+
+int main() 
+{
+  // Initializing Robot Configuration. DO NOT REMOVE!
+  vexcodeInit();
+  //1 - Slow in
+  //2 - Fast in
+  //3 - slow out
+  //4 - fast out
+  //5 - stop
+  //for tray ~1000 stacks - continue testinglift(500);
+  lift(500);
+  lift(-500);
+  intake(2);
+  drive(2000, 50);
+  intake(1);
+  drive(-2000, 50);
+}
